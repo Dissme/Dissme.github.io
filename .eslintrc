@@ -1,0 +1,34 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "prettier",
+    "prettier/react"
+  ],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "commonjs": true,
+    "jest": true
+  },
+  "rules": {
+    "react/prop-types": 0,
+    "react/no-unknown-property": 0,
+    "react/display-name": 0
+  },
+  "globals": {
+    "SharedArrayBuffer": "readonly",
+    "Atomics": "readonly"
+  },
+  "settings": {
+    "react": {
+      "version": "999.999.999"
+    }
+  }
+}

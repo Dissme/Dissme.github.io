@@ -1,0 +1,26 @@
+export const group = '@easythings/easy-view';
+
+## render(node: JSXElement): (port: MessagePort) => number
+
+> 用于把用户的代码渲染成虚拟 dom
+
+**node:** 类似 `<Main />` 这样的一个标签\
+**返回值:** 用来监听 port 发来的事件、发送虚拟 dom 的函数
+
+```jsx
+const listen = render(<Menu />);
+const platform = self.constructor.name;
+const init = {
+  ['SharedWorkerGlobalScope']() {
+    self.onconnect = ({ ports }) => {
+      ports.forEach((port) => {
+        listen(port);
+      });
+    };
+  },
+  ['DedicatedWorkerGlobalScope']() {
+    listen(self);
+  },
+};
+init[platform]?.();
+```

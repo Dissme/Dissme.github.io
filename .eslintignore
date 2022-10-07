@@ -1,0 +1,12 @@
+build/
+coverage/
+dist/
+docs/
+es/
+lib/
+node_modules/
+**/*.min.js
+**/*-min.js
+**/*.bundle.js
+
+webpack/
