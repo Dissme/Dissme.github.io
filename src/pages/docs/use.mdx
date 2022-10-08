@@ -2,7 +2,7 @@ export const group = '@easythings/easy-view';
 
 ## use(plugins: Record\<string, \{ call?(this: HTMLElement, target: HTMLElement, dispatch: (detail: object) => \{\}): () => void; format?(): object \}\>): void
 
-> 用于创建用户的自定义事件 页面里才能用
+> 用于创建用户的自定义事件 只有页面里可以用
 
 **plugins:** 一个配置用户的自定义事件的对象\
 **call:** jsx 里绑定对应事件的时候 dom 环境会调用 call 函数\
@@ -10,23 +10,11 @@ export const group = '@easythings/easy-view';
 
 ```jsx
 // bootstrap.js
-import { customEvents } from './utils';
-use(customEvents);
-// utils.js
 import intersection from './intersection';
-export const customEvents = {
+use({
   intersection,
-  input: {
-    format(e) {
-      const target = e.target;
-      let value = target.value;
-      if (target.isContentEditable) {
-        value = target.innerHTML;
-      }
-      return { value };
-    },
-  },
-};
+});
+
 // intersection.js
 const observerMap = new WeakMap();
 const dispatchMap = new WeakMap();

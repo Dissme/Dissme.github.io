@@ -57,7 +57,7 @@ function Menu(props, children, hook) {
   currentPath.collect(hook);
 
   return (
-    <nav className="flex items-center px-6">
+    <nav className="flex items-center py-4 px-6">
       <a
         href="/"
         className="bg-gradient-to-r text-transparent from-sky-500 to-pink-300 bg-clip-text text-2xl flex-initial"

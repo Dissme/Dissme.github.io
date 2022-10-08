@@ -12,7 +12,7 @@ const entries = APIs.keys()
 
 function Main() {
   return (
-    <Layout>
+    <Layout noBg>
       {entries.map((doc) => (
         <doc.Component key={doc.id} group={doc.group} components={components} />
       ))}

@@ -8,7 +8,9 @@ const entries = APIs.keys()
     Component: APIs(path)['default'],
     group: APIs(path)['group'] ?? '建设中',
   }))
-  .sort((a, b) => a.group.charCodeAt() - b.group.charCodeAt());
+  .sort(
+    (a, b) => a.group.charCodeAt() - b.group.charCodeAt() || b.id.charCodeAt() - a.id.charCodeAt(),
+  );
 
 function Main() {
   return (

@@ -1,0 +1,15 @@
+export const group = '@easythings/easy-view/jsx-runtime';
+
+## MicroComponent
+
+> 微前端组件
+
+这个组件用来渲染远程的组件 只接受一个名为 port 的 props 并且没有 children
+
+```jsx
+import { MicroComponent } from '@easythings/easy-view/jsx-runtime';
+const port = new Worker(new URL('@/components/worker/Menu', import.meta.url));
+function Main() {
+  return <MicroComponent port={port} />;
+}
+```

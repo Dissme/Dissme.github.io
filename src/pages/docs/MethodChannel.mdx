@@ -1,0 +1,24 @@
+export const group = '@easythings/easy-view';
+
+## class MethodChannel
+
+> 用于两个隔离的环境交互的一组函数
+
+**connect(port: MessagePort): void;** 用来连接对面的\
+**register(methodName: string, method: (params: any) => any): void;** 注册一个函数 同一个名字新的会代替旧的\
+**unregister(methodName: string): void;** 取消注册一个函数\
+**postMessage(methodName: string, params: any): void;** 不需要返回值的调用\
+**sendMessage(methodName: string, params: any): Promise\<any\>;** 需要返回值的调用
+
+```jsx
+// bootstrap.js
+const port = new Worker(new URL('@/components/worker/Menu', import.meta.url));
+const channel = new MethodChannel();
+channel.register(methods.getPathName, () => location.pathname);
+channel.connect(port);
+
+// Menu.jsx
+const channel = new MethodChannel();
+channel.connect(self);
+channel.sendMessage(methods.getPathName).then((pathname) => console.log(pathname));
+```

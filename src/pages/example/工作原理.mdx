@@ -1,0 +1,10 @@
+export const group = '开始';
+
+## 工作原理
+
+\
+easy-view 将视图和逻辑分为两层, 并通过 port 将两层粘合起来.\
+当视图层 [mount](/docs.html#mount) 或者 [mountFromPort](/docs.html#mountFromPort) 的时候,
+会开始监听传入的根节点的事件和目标 port 发来的 patch 事件和 destroy 事件, 并通过 port 传递页面事件和接收页面更新.\
+逻辑层在调用 [render](/docs.html#render) 后会返回一个监听函数 监听函数绑定 port 后会开始监听 connect 事件,
+connect 后会向对应 port 发送当前的虚拟 dom, 然后随着虚拟 dom 更新不断发送给视图层 patch.

@@ -1,18 +1,20 @@
+import { propsProxy } from '@/utils';
+
 export const components = {
   h2: (props, children) => (
-    <h2 className="font-bold text-xl" id={children[0] === 'string' && children[0]}>
+    <h2 className="font-bold text-xl text-slate-200" id={children[0] === 'string' && children[0]}>
       {children}
     </h2>
   ),
   blockquote: (props, children) => (
-    <blockquote className="group text-justify leading-relaxed text-slate-400 text-sm mb-6">
+    <blockquote className="group text-justify leading-relaxed text-slate-400 mb-6">
       {children.reduce((arr, node) => {
         if (node.tag === components.p) arr.push(node.children);
         return arr;
       }, [])}
     </blockquote>
   ),
-  p: (props, children) => <p className="text-justify leading-relaxed mb-2 text-sm">{children}</p>,
+  p: (props, children) => <p className="text-justify leading-relaxed mb-2">{children}</p>,
   code: (props, children) => (
     <code className={`text-slate-400 ${props.className ?? ''}`}>{children}</code>
   ),
@@ -28,6 +30,7 @@ export const components = {
       {children}
     </a>
   ),
+  img: (props) => <img {...props} crossOrigin />,
 };
 
 function renderCodeBlock(code) {
@@ -53,6 +56,7 @@ function renderCodeBlock(code) {
 }
 
 export function Layout(props, children) {
+  const { noBg } = propsProxy(props);
   const filterdChildren = () =>
     children
       .filter((child) => child.key)
@@ -97,7 +101,7 @@ export function Layout(props, children) {
 
   return (
     <>
-      <aside className="h-full fixed left-0 w-64 overflow-x-hidden overflow-y-auto text-sm break-words">
+      <aside className="h-full fixed left-0 w-64 overflow-x-hidden overflow-y-auto text-sm break-words hidden sm:block">
         {filterdChildren().map((group) => (
           <nav key={group.name}>
             <ol className="py-4 pl-4">
@@ -125,13 +129,17 @@ export function Layout(props, children) {
           </nav>
         ))}
       </aside>
-      <main className="pl-72 pt-6 pb-6 pr-6 lg:pr-60 break-words">
+      <main className="pl-6 sm:pl-72 pt-6 pb-6 pr-6 lg:pr-60 break-words">
         {filterdChildren().map((group) => (
-          <section key={group.name} className="pb-4 mb-14">
-            <h1 className="font-bold text-3xl">{group.name}</h1>
+          <section key={group.name} className={`mb-16 ${noBg() ? 'text-base' : 'text-sm'}`}>
+            <h1 className="sticky sm:static pb-8 border-b border-stone-50/30 bg-slate-900 sm:bg-transparent z-10 top-16 left-0 font-bold text-3xl">
+              {group.name}
+            </h1>
             {group.map((child) => (
               <section
-                className="p-4 rounded-lg bg-stone-50/30 my-4 relative"
+                className={`my-8 relative ${
+                  noBg() ? 'text-slate-300' : 'bg-stone-50/30 p-4 rounded-lg'
+                }`}
                 key={child.key}
                 on-intersection={({ detail: { value } }) => {
                   hashRatio[child.key] = value;

@@ -21,6 +21,14 @@ export function createObserve(initial = '') {
   return observe;
 }
 
+export function propsProxy(props) {
+  return new Proxy(props, {
+    get(t, k, r) {
+      return () => Reflect.get(t, k, r);
+    },
+  });
+}
+
 export const customEvents = {
   intersection,
   mounted(target, dispatch) {

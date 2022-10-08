@@ -1,0 +1,26 @@
+export const group = '@easythings/easy-view/jsx-runtime';
+
+## jsx 和 jsxs
+
+> babel 构建阶段自动添加的函数
+
+这个函数用来把 jsx 代码构建成 js 代码的 需要配合 [@babel/preset-react](https://www.npmjs.com/package/@babel/preset-react)
+
+```bash
+npm i -D @babel/preset-react
+```
+
+```js
+// .babelrc
+module.exports = {
+  presets: [
+    [
+      '@babel/preset-react',
+      {
+        runtime: 'automatic',
+        importSource: '@easythings/easy-view',
+      },
+    ],
+  ],
+};
+```

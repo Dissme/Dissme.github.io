@@ -1,0 +1,22 @@
+export const group = '@easythings/easy-view/jsx-runtime';
+
+## defineRender
+
+> babel 构建阶段自动添加的函数
+
+这个函数用来保证组件的返回值在闭包内 需要配合 [@easythings/babel-plugin-easy-view-jsx](https://www.npmjs.com/package/@easythings/babel-plugin-easy-view-jsx)
+
+```bash
+npm i -D @easythings/babel-plugin-easy-view-jsx
+```
+
+```js
+// .babelrc
+module.exports = {
+  ...,
+  plugins: [
+    ['@easythings/easy-view-jsx'],
+    ...,
+  ],
+};
+```
