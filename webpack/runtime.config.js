@@ -5,7 +5,7 @@ const webpackConfig = require('./index.config');
 const webpackConfigRuntime = {
   output: {
     filename: 'js/[name].bundle.js',
-    path: path.resolve(__dirname, '../docs'),
+    path: path.resolve(__dirname, '../dist'),
     clean: true,
   },
   devServer: {
@@ -13,8 +13,12 @@ const webpackConfigRuntime = {
       'Cross-Origin-Resource-Policy': 'same-origin',
       'Cross-Origin-Opener-Policy': 'same-origin',
       'Cross-Origin-Embedder-Policy': 'require-corp',
+      'Service-Worker-Allowed': '/',
     },
-    https: true,
+    https: {
+      key: path.resolve(__dirname, '../ca/key.pem'),
+      cert: path.resolve(__dirname, '../ca/cert.pem'),
+    },
     compress: true,
     hot: true,
     open: true,

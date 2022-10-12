@@ -1,4 +1,3 @@
-import { mount } from '@easythings/easy-view';
 import { components, Layout } from '../../components/main/Layout';
 
 const APIs = require.context('@/pages/example', false, /.mdx$/);
@@ -10,7 +9,7 @@ const entries = APIs.keys()
   }))
   .sort((a, b) => a.group.charCodeAt() - b.group.charCodeAt());
 
-function Main() {
+export default function Main() {
   return (
     <Layout noBg>
       {entries.map((doc) => (
@@ -19,5 +18,3 @@ function Main() {
     </Layout>
   );
 }
-
-mount(<Main />, document.querySelector('#app'));

@@ -6,15 +6,11 @@ const currentPath = createObserve('/');
 
 const menus = [
   {
-    href: '/',
-    name: '首页',
-  },
-  {
-    href: '/example.html',
+    href: '/example',
     name: '指引',
   },
   {
-    href: '/docs.html',
+    href: '/docs',
     name: '文档',
   },
   {
@@ -39,7 +35,6 @@ function renderItem({ href, name, icon, split }) {
     ? {}
     : {
         rel: 'noopener noreferrer',
-        target: '_blank',
         href,
       };
 
@@ -82,6 +77,9 @@ function init() {
     ['SharedWorkerGlobalScope']() {
       self.onconnect = ({ ports }) => {
         ports.forEach((port) => {
+          const channel = new MethodChannel();
+          channel.register(methods.setPathName, currentPath);
+          channel.connect(port);
           listen(port);
         });
       };
@@ -89,7 +87,7 @@ function init() {
     ['DedicatedWorkerGlobalScope']() {
       const channel = new MethodChannel();
       channel.connect(self);
-      channel.sendMessage(methods.getPathName).then(currentPath);
+      channel.register(methods.setPathName, currentPath);
       listen(self);
     },
   };

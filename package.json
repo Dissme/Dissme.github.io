@@ -11,7 +11,7 @@
     "build:dev": "webpack --config webpack/build.config.js --mode=development --env goal=development --progress=profile",
     "build:test": "webpack --config webpack/build.config.js --mode=development --env goal=test --progress=profile",
     "build:prod": "webpack --config webpack/build.config.js --mode=production --env goal=production --progress=profile",
-    "serve": "serve docs",
+    "serve": "serve dist",
     "f2elint-scan": "f2elint scan",
     "f2elint-fix": "f2elint fix"
   },

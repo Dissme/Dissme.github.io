@@ -13,6 +13,8 @@
   "env": {
     "es6": true,
     "browser": true,
+    "serviceworker": true,
+    "worker": true,
     "node": true,
     "commonjs": true,
     "jest": true

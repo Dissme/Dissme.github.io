@@ -148,7 +148,9 @@ export function Layout(props, children) {
                 <span
                   id={child.key}
                   className="absolute -top-16"
-                  on-mounted={() => initScrollPos(child.key)}
+                  on-mounted={() => {
+                    initScrollPos(child.key);
+                  }}
                 />
                 {child}
               </section>

@@ -1,5 +1,4 @@
 const path = require('path');
-const glob = require('glob');
 // html模板
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // 静态资源输出
@@ -8,52 +7,20 @@ const Dotenv = require('dotenv-webpack');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const rules = require('./rules.config');
 
-/**
- * @function 获取入口
- */
-function getEntry() {
-  const entry = {};
-  glob.sync('./src/pages/**/index.jsx').forEach((name) => {
-    const start = name.indexOf('src/') + 4;
-    const end = name.length - 3;
-    let n = name.slice(start, end);
-    // 保存各个组件的入口
-    n = n.slice(0, n.lastIndexOf('/'));
-    n = n.split('pages/')[1];
-    entry[n] = { import: name, dependOn: 'bootstrap' };
-  });
-  return entry;
-}
-
-/**
- * @description 入口对象
- */
-const entry = getEntry();
-/**
- * @description html模板数组
- */
-const htmlTemplateArray = [];
-// 生成模板
-Object.keys(entry).forEach((filename) => {
-  htmlTemplateArray.push(
-    new HtmlWebpackPlugin({
-      title: filename,
-      filename: `${filename}.html`,
-      chunks: ['vendor', 'common', 'bootstrap', filename],
-      template: path.resolve(__dirname, '../template.html'),
-    }),
-  );
-});
-
-entry.bootstrap = path.resolve(__dirname, '../src/bootstrap.js');
-
 module.exports = (env, argv) => {
   console.log(env);
   const config = {
     mode: argv.mode,
-    entry,
+    entry: {
+      bootstrap: path.resolve(__dirname, '../src/bootstrap.jsx'),
+    },
     plugins: [
-      ...htmlTemplateArray,
+      new HtmlWebpackPlugin({
+        title: 'easy-view',
+        filename: 'index.html',
+        chunks: 'all',
+        template: path.resolve(__dirname, '../template.html'),
+      }),
       new Dotenv({
         path: `.env.${env.goal}`,
       }),

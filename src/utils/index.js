@@ -29,12 +29,22 @@ export function propsProxy(props) {
   });
 }
 
+const unmountMap = new WeakMap();
+
 export const customEvents = {
   intersection,
   mounted(target, dispatch) {
-    setTimeout(() => {
-      dispatch();
+    let timer = setTimeout(() => {
+      dispatch({ cancelBubble: true });
     }, 0);
+    return () => {
+      timer = clearTimeout(timer);
+      unmountMap.get(target)?.({ cancelBubble: true });
+    };
+  },
+  unmount(target, dispatch) {
+    unmountMap.set(target, dispatch);
+    return () => unmountMap.delete(target);
   },
   input: {
     format(e) {

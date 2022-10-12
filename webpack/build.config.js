@@ -7,7 +7,7 @@ const webpackConfig = require('./index.config');
 const webpackConfigBuild = {
   output: {
     filename: 'js/[name].[fullhash].js',
-    path: path.resolve(__dirname, '../docs'),
+    path: path.resolve(__dirname, '../dist'),
     clean: true,
     assetModuleFilename: 'assets/[hash:8][ext]',
   },
