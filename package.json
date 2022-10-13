@@ -24,7 +24,7 @@
   "author": "344275632@qq.com",
   "license": "MIT",
   "dependencies": {
-    "@easythings/easy-view": "^0.2.3"
+    "@easythings/easy-view": "^0.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
