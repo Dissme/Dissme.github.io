@@ -1,0 +1,46 @@
+import { Box } from '@/components/main/Box';
+import { Counter } from '@/components/examples/Counter';
+export const group = '开始';
+
+## 起步
+
+\
+写一个 hello world
+
+```jsx
+#hello.jsx
+function Hello() {
+  return 'hello world';
+}
+mount(<Hello>, document.body)
+```
+
+export function Hello() {
+  return 'hello world';
+}
+
+<Box fileName="结果展示">
+  <div className="hljs">
+    <Hello />
+  </div>
+</Box>
+
+\
+像上面展示的一样, easy-view 和 react 比较相似, 都是用 jsx 来描述 view 的. 下面再来写一个 counter
+
+```jsx
+#Counter.jsx
+function Counter() {
+  let i = '0';
+  return <div on-click={() => i++}>Count is: {i}</div>;
+}
+```
+
+<Box fileName="结果展示">
+  <div className="hljs">
+    <Counter />
+  </div>
+</Box>
+
+\
+从这里开始 easy-view 会有些不同, 但它显然更直观, 没有什么学习曲线.

@@ -1,0 +1,40 @@
+import { Box } from '@/components/main/Box';
+import { Example } from '@/components/examples/Example';
+export const group = '基础';
+
+## 组件
+
+\
+在 easy-view 里组件有三个参数: props, children, hook;
+
+```jsx
+#Example.jsx
+function Example(props, children, hook) {
+  let i = '0';
+  hook.click.on(() => {
+    i++;
+  });
+  return (
+    <div>
+      <div>props: {JSON.stringify(props)}</div>
+      <div>children: {JSON.stringify(children)}</div>
+      <div>clicked: {i}</div>
+    </div>
+  );
+}
+
+(<Example a="1" b="2" on-xxx before-xxx>c=3 {{ d: 4 }}</Example>)
+```
+
+<Box fileName="结果展示">
+  <div className="hljs">
+    <Example a="1" b="2" on-xxx before-xxx>
+      c=3 {{ d: 4 }}
+    </Example>
+  </div>
+</Box>
+
+\
+props 是标签上包含了 on- 和 before- 这样的开头的属性以外的的属性的 object\
+children 是标签内部的子元素的集合的 Array\
+hook 是用来绑定或者触发当前组件的事件的, 相关可查阅[文档](/docs#hook)

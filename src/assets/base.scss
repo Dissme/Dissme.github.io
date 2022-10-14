@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-code.hljs {
-  @apply px-4 py-2;
+.hljs {
+  @apply px-4 py-2 block rounded-md overflow-auto leading-loose whitespace-pre;
 }

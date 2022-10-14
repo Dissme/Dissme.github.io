@@ -1,0 +1,49 @@
+import { Box } from '@/components/main/Box';
+import { Example } from '@/components/examples/HookExample';
+
+export const group = '组件';
+
+## hook
+
+> 监听或者触发组件的事件
+
+```ts
+#Hook.ts;
+interface Hook {
+  [eventNames: string]: {
+    (detail: any): void;
+    on(callback: (e: CustomEvent) => any): void;
+    off(callback: (e: CustomEvent) => any): void;
+    once(callback: (e: CustomEvent) => any): void;
+    before: {
+      (callback: (e: CustomEvent) => any): void;
+      off(callback: (e: CustomEvent) => any): void;
+      once(callback: (e: CustomEvent) => any): void;
+    };
+  };
+}
+```
+
+```jsx
+#HookExample.jsx
+function Example(props, children, hook) {
+  const logs = [];
+  hook.click.before((e) => {
+    logs.push({ beforeClick: e.detail });
+  });
+  hook.click.on((e) => {
+    logs.push({ clicked: e.detail });
+  });
+  hook.click(123); // 触发click事件
+
+  return <>{JSON.stringify(logs)}</>;
+}
+```
+
+<Box fileName="结果展示">
+  <div className="hljs">
+    <Example a="1" b="2" on-xxx before-xxx>
+      c=3 {{ d: 4 }}
+    </Example>
+  </div>
+</Box>

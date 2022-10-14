@@ -11,14 +11,8 @@ function onLoad() {
     (e) => {
       const a = e.target;
       if (a?.localName !== 'a' || a.target === '_blank' || a.origin !== location.origin) return;
+      if (a.pathname === lastUrl.pathname && a.search === lastUrl.search) return;
       e.preventDefault();
-      if (a.pathname === lastUrl.pathname && a.search === lastUrl.search) {
-        if (a.hash !== lastUrl.hash) {
-          lastUrl.hash = a.hash;
-          location.hash = a.hash;
-        }
-        return;
-      }
       history.pushState(null, '', a.href);
       onPopState();
     },

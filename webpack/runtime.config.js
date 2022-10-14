@@ -2,6 +2,7 @@ const path = require('path');
 const webpackMerge = require('webpack-merge');
 const webpackConfig = require('./index.config');
 
+/** @type {import('webpack').Configuration} */
 const webpackConfigRuntime = {
   output: {
     filename: 'js/[name].bundle.js',
@@ -9,6 +10,9 @@ const webpackConfigRuntime = {
     clean: true,
   },
   devServer: {
+    historyApiFallback: {
+      index: '/404.html',
+    },
     headers: {
       'Cross-Origin-Resource-Policy': 'same-origin',
       'Cross-Origin-Opener-Policy': 'same-origin',

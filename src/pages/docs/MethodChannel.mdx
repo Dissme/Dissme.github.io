@@ -10,14 +10,19 @@ export const group = '@easythings/easy-view';
 **postMessage(methodName: string, params: any): void;** 不需要返回值的调用\
 **sendMessage(methodName: string, params: any): Promise\<any\>;** 需要返回值的调用
 
-```jsx
-// bootstrap.js
+\
+下面这个例子是上方的菜单组件
+
+```js
+#bootstrap.js
 const port = new Worker(new URL('@/components/worker/Menu', import.meta.url));
 const channel = new MethodChannel();
 channel.register(methods.getPathName, () => location.pathname);
 channel.connect(port);
+```
 
-// Menu.jsx
+```jsx
+#Menu.jsx
 const channel = new MethodChannel();
 channel.connect(self);
 channel.sendMessage(methods.getPathName).then((pathname) => console.log(pathname));

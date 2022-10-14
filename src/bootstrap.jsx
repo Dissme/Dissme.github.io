@@ -1,3 +1,4 @@
+import '@/assets/theme.css';
 import '@/assets/base.scss';
 import './utils/router';
 import { use, mount, MethodChannel, mountFromPort } from '@easythings/easy-view';
@@ -13,7 +14,7 @@ use(customEvents);
 const channel = new MethodChannel();
 channel.connect(port);
 
-let lastPage = location.pathname;
+let lastPage = '';
 
 mountFromPort(port, document.querySelector('#menu'));
 mount(

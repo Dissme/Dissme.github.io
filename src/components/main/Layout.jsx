@@ -1,4 +1,5 @@
 import { propsProxy } from '@/utils';
+import { Box } from './Box';
 
 export const components = {
   h2: (props, children) => (
@@ -18,12 +19,16 @@ export const components = {
   code: (props, children) => (
     <code className={`text-slate-400 ${props.className ?? ''}`}>{children}</code>
   ),
-  pre: (props, children) => (
-    <details className="text-sm" open>
-      <summary className="cursor-pointer select-none py-2 pr-2 w-fit">示例</summary>
-      {renderCodeBlock(children[0])}
-    </details>
-  ),
+  pre: (props, children) => {
+    const code = children[0];
+    let fileName = '';
+    const reg = /#(.*)\n$/;
+    if (typeof code.children[0] === 'string' && reg.test(code.children[0])) {
+      fileName = code.children[0].match(reg)[1];
+    }
+
+    return <Box fileName={fileName}>{renderCodeBlock(children[0], fileName)}</Box>;
+  },
   strong: (props, children) => <strong className="text-base mr-2">{children}</strong>,
   a: (props, children) => (
     <a href={props.href} className="text-sky-500 decoration-current decoration-wavy underline">
@@ -33,22 +38,12 @@ export const components = {
   img: (props) => <img {...props} crossOrigin />,
 };
 
-function renderCodeBlock(code) {
+function renderCodeBlock(code, fileName) {
   if (!code) return;
   return (
-    <code
-      className={`${
-        code.props?.className ?? ''
-      } block rounded overflow-auto leading-loose whitespace-nowrap`}
-    >
-      {code.children?.map?.((child) => {
-        if (typeof child === 'string') {
-          child = child.replace(/ /g, '\xa0');
-          const strList = child.split('\n');
-          if (strList.length) {
-            child = strList.map((str, i) => [i && <br />, str]);
-          }
-        }
+    <code className={code.props?.className}>
+      {code.children?.map?.((child, i) => {
+        if (i === 0 && fileName) return;
         return child;
       })}
     </code>
@@ -101,7 +96,7 @@ export function Layout(props, children) {
 
   return (
     <>
-      <aside className="h-full fixed left-0 w-64 overflow-x-hidden overflow-y-auto text-sm break-words hidden sm:block">
+      <aside className="fixed left-0 bottom-0 top-16 w-64 overflow-x-hidden overflow-y-auto text-sm break-words hidden sm:block">
         {filterdChildren().map((group) => (
           <nav key={group.name}>
             <ol className="py-4 pl-4">

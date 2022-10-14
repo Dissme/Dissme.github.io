@@ -2,7 +2,7 @@ const plugin = require('tailwindcss/plugin');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js,jsx}', './template.html'],
+  content: ['./src/**/*.{js,jsx,mdx}', './template.html'],
   darkMode: 'media',
   theme: {
     extend: {
@@ -19,6 +19,11 @@ module.exports = {
             'mask-image': `${image}`,
             'mask-repeat': 'repeat',
             'mask-size': 'contain',
+          };
+        },
+        ['animation-delay'](ms) {
+          return {
+            'animation-delay': `${ms}ms`,
           };
         },
       });

@@ -8,14 +8,19 @@ export const group = '@easythings/easy-view';
 **call:** jsx 里绑定对应事件的时候 dom 环境会调用 call 函数\
 **dispatch:** 用于触发事件 传递的 detail 参数会出现在事件的 detail 里 detail 对象里不能放不能通过 port 传递的东西
 
-```jsx
-// bootstrap.js
+\
+下面这个例子是左边随着滚动高亮锚点的事件
+
+```js
+#bootstrap.js
 import intersection from './intersection';
 use({
   intersection,
 });
+```
 
-// intersection.js
+```js
+#intersection.js
 const observerMap = new WeakMap();
 const dispatchMap = new WeakMap();
 

@@ -64,6 +64,73 @@ function loadComponent(loadFn, hook) {
   return com;
 }
 
+function Loading() {
+  return (
+    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 contrast-200 text-xl">
+      <svg
+        class="absolute animate-spin animation-delay-[30] text-cyan-500 -top-1 w-8 h-8"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+      <svg
+        class="absolute animate-spin left-1 text-red-500 w-8 h-8"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+      <svg
+        class="animate-spin animation-delay-[30] w-8 h-8"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+    </div>
+  );
+}
+
 function getEle(X, fallback, params, query, children) {
   if (X.postMessage) return <MicroComponent port={X} />;
   if (typeof X === 'function')
@@ -72,11 +139,7 @@ function getEle(X, fallback, params, query, children) {
         {children}
       </X>
     );
-  return (
-    fallback ?? (
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">加载中...</div>
-    )
-  );
+  return fallback ?? <Loading />;
 }
 
 const loadMap = new WeakMap();
