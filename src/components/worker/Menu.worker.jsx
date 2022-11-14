@@ -1,6 +1,6 @@
 import { createObserve } from '@/utils';
 import { methods } from '@/utils/constants';
-import { render, MethodChannel } from '@easythings/easy-view';
+import { render, MethodChannel } from '@easythings/easy-view/jsx-runtime';
 
 const currentPath = createObserve('/');
 
@@ -86,8 +86,8 @@ function init() {
     },
     ['DedicatedWorkerGlobalScope']() {
       const channel = new MethodChannel();
-      channel.connect(self);
       channel.register(methods.setPathName, currentPath);
+      channel.connect(self);
       listen(self);
     },
   };

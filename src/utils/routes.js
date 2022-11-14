@@ -1,13 +1,17 @@
-const entries = require.context('@/pages', true, /.jsx$/, 'lazy');
+const entries = import.meta.webpackContext('@/pages', {
+  recursive: true,
+  regExp: /\.jsx$/,
+  exclude: /components\/|\.worker\.jsx$/,
+});
 
 export const routes = entries
   .keys()
   .map((k) => {
-    if (/components\//.test(k)) return;
     const path = `/${k.replace(/(\.\/|(\/?index)?\.jsx)/g, '')}`;
+    const module = entries(k);
     return {
       path,
-      component: () => entries(k),
+      component: module.default,
     };
   })
   .filter((ret) => !!ret);

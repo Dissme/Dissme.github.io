@@ -1,4 +1,4 @@
 export const methods = {
-  getPathName: 'getPathName',
   setPathName: 'setPathName',
+  scrollIntoView: 'scrollIntoView',
 };

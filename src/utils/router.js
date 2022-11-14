@@ -1,25 +1,16 @@
 import { use } from '@easythings/easy-view';
-if (document.referrer) history.replaceState(null, '', document.referrer);
 
 let lastUrl = getURL();
 const dispatchers = new Set();
+const containers = new WeakSet();
 
-function onLoad() {
+function onClick(e) {
+  const a = e.target;
+  if (a?.localName !== 'a' || a.target === '_blank' || a.origin !== location.origin) return;
+  if (a.pathname === lastUrl.pathname && a.search === lastUrl.search) return;
+  e.preventDefault();
+  history.pushState(null, '', a.href);
   onPopState();
-  document.addEventListener(
-    'click',
-    (e) => {
-      const a = e.target;
-      if (a?.localName !== 'a' || a.target === '_blank' || a.origin !== location.origin) return;
-      if (a.pathname === lastUrl.pathname && a.search === lastUrl.search) return;
-      e.preventDefault();
-      history.pushState(null, '', a.href);
-      onPopState();
-    },
-    {
-      capture: true,
-    },
-  );
 }
 
 function onPopState() {
@@ -36,15 +27,24 @@ function getURL() {
   };
 }
 
-window.addEventListener('DOMContentLoaded', onLoad);
+window.addEventListener('DOMContentLoaded', onPopState);
 window.addEventListener('popstate', onPopState);
 
 use({
-  route(target, dispatch) {
-    dispatch(lastUrl);
-    dispatchers.add(dispatch);
-    return () => {
-      dispatchers.delete(dispatch);
-    };
+  route: {
+    init(container) {
+      if (containers.has(container)) return;
+      container.addEventListener('click', onClick, {
+        capture: true,
+      });
+    },
+    call(container, target, dispatch) {
+      containers.add(container);
+      dispatch(lastUrl);
+      dispatchers.add(dispatch);
+      return () => {
+        dispatchers.delete(dispatch);
+      };
+    },
   },
 });

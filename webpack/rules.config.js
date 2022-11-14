@@ -1,11 +1,26 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const rehypeHighlight = require('rehype-highlight');
-/** @type {import('webpack').ModuleOptions['rules']} */
+const path = require('path');
+
+/**
+ *
+ * @param {*} env
+ * @returns {import('webpack').ModuleOptions['rules']}
+ */
 const rules = (env) => [
+  {
+    test: /\.worker\.jsx?$/,
+    use: [
+      {
+        loader: path.resolve(__dirname, './worker-loader.js'),
+      },
+      'babel-loader',
+    ],
+  },
   {
     test: /\.jsx?$/,
     use: 'babel-loader',
-    exclude: /node_modules/,
+    exclude: [/node_modules/, /\.worker\.jsx?$/],
   },
   {
     test: /\.mdx$/,

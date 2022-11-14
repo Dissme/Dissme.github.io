@@ -1,4 +1,5 @@
 import { propsProxy } from '@/utils';
+import { methods } from '@/utils/constants';
 import { Box } from './Box';
 
 export const components = {
@@ -50,7 +51,7 @@ function renderCodeBlock(code, fileName) {
   );
 }
 
-export function Layout(props, children) {
+export function Layout(props, children, hook) {
   const { noBg } = propsProxy(props);
   const filterdChildren = () =>
     children
@@ -67,17 +68,16 @@ export function Layout(props, children) {
         return arr;
       }, []);
 
-  let clickedHash = decodeURIComponent(location.hash.slice(1));
-  const hashRatio = {};
-  const initScrollPos = (id) => {
-    if (id === clickedHash) {
-      document.querySelector(`#${clickedHash}`)?.scrollIntoView?.({
-        block: 'start',
-        inline: 'start',
-        behavior: 'smooth',
-      });
+  let clickedHash = '';
+
+  hook.route.before(({ detail }) => {
+    clickedHash = detail.hash.slice(1);
+    if (clickedHash) {
+      props.channel.postMessage(methods.scrollIntoView, decodeURIComponent(clickedHash));
     }
-  };
+  });
+
+  const hashRatio = {};
 
   const hash = () => {
     let ret = clickedHash;
@@ -107,9 +107,6 @@ export function Layout(props, children) {
                 <li key={`#${child.key}`} className="py-1">
                   <a
                     href={`#${child.key}`}
-                    on-click={() => {
-                      clickedHash = child.key;
-                    }}
                     className={`border-l pl-4 transition-all ${
                       child.key === hash()
                         ? 'text-sky-500 border-sky-500'
@@ -140,13 +137,7 @@ export function Layout(props, children) {
                   hashRatio[child.key] = value;
                 }}
               >
-                <span
-                  id={child.key}
-                  className="absolute -top-16"
-                  on-mounted={() => {
-                    initScrollPos(child.key);
-                  }}
-                />
+                <span id={child.key} className="absolute -top-16" />
                 {child}
               </section>
             ))}

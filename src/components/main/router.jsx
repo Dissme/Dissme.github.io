@@ -1,5 +1,3 @@
-import { MicroComponent } from '@easythings/easy-view/jsx-runtime';
-
 function parseQuery(url) {
   const qs = url.search.split(/\?|&/);
   return qs.reduce((obj, str) => {
@@ -132,7 +130,6 @@ function Loading() {
 }
 
 function getEle(X, fallback, params, query, children) {
-  if (X.postMessage) return <MicroComponent port={X} />;
   if (typeof X === 'function')
     return (
       <X params={params} query={query}>

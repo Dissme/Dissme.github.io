@@ -9,6 +9,7 @@ const rules = require('./rules.config');
 
 module.exports = (env, argv) => {
   console.log(env);
+  /** @type {import('webpack').Configuration} */
   const config = {
     mode: argv.mode,
     entry: {
@@ -18,6 +19,12 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         title: 'easy-view',
         filename: 'index.html',
+        chunks: 'all',
+        template: path.resolve(__dirname, '../template.html'),
+      }),
+      new HtmlWebpackPlugin({
+        title: 'easy-view',
+        filename: '404.html',
         chunks: 'all',
         template: path.resolve(__dirname, '../template.html'),
       }),

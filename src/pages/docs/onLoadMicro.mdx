@@ -1,0 +1,12 @@
+export const group = '@easythings/easy-view';
+
+## onLoadMicro(callback: (props: Record\<string, any\>) => MessagePort)
+
+> 注册加载远程组件时的回调 只有页面里可以用
+
+```jsx
+onLoadMicro((props) => {
+  const { url } = props;
+  return new Worker(url);
+});
+```
