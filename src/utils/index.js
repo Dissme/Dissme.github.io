@@ -1,5 +1,6 @@
 import { methods } from '@/utils/constants';
 import { MethodChannel } from '@easythings/easy-view/jsx-runtime';
+import { url as BgUrl } from '@/components/worker/Background.worker';
 import intersection from './intersection';
 
 export function createObserve(initial = '') {
@@ -96,4 +97,23 @@ export function createWorker(url, pid) {
   });
   channel.connect(worker);
   return worker;
+}
+
+export function createBg() {
+  const canvas = document.getElementById('background');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const bgWorker = new Worker(BgUrl);
+  const channel = new MethodChannel();
+  channel.connect(bgWorker);
+  channel.transfer(methods.sendCanvas, [canvas.transferControlToOffscreen()]);
+  const img = new Image();
+  img.onload = async () => {
+    const bitmap = await createImageBitmap(img, 0, 0, img.width, img.height);
+    channel.transfer(methods.sendIcon, [bitmap]);
+  };
+  img.src = '/favicon.ico';
+  document.addEventListener('mousemove', (e) => {
+    channel.postMessage(methods.mouseMove, [e.clientX, e.clientY]);
+  });
 }

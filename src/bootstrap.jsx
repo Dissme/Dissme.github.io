@@ -3,7 +3,7 @@ import '@/assets/base.scss';
 import '@/utils/router';
 import { use, mount, onLoadMicro } from '@easythings/easy-view';
 import { MethodChannel } from '@easythings/easy-view/jsx-runtime';
-import { createWorker, customEvents } from '@/utils';
+import { createBg, createWorker, customEvents } from '@/utils';
 import { routes } from '@/utils/routes';
 import { methods } from '@/utils/constants';
 import { Route, Switch } from '@/components/main/router';
@@ -12,6 +12,7 @@ import { MicroComponent } from '@easythings/easy-view/jsx-runtime';
 import { url as menuUrl } from '@/components/worker/Menu.worker';
 
 use(customEvents);
+createBg();
 
 const channel = new MethodChannel();
 let menuWorker;
